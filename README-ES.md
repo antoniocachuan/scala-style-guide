@@ -827,7 +827,7 @@ def getAddress(name: String): Option[String] = {
 
 ### <a name='concurrency-scala-collection'>Scala concurrent.Map</a>
 
-__Prefiero `java.util.concurrent.ConcurrentHashMap` antes que `scala.collection.concurrent.Map`__. En particular el método `getOrElseUpdate` en `scala.collection.concurrent.Map` no es atómico (Corregido en Scala 2.11.6, [SI-7943](https://issues.scala-lang.org/browse/SI-7943)). Dado que en todos los proyectos en el que trabajos requieren construcción cruzada tanto para Scala 2.10 como para Scala 2.11, se debe evitar el uso de `scala.collection.concurrent.Map`.
+__De Preferencia usar `java.util.concurrent.ConcurrentHashMap` antes que `scala.collection.concurrent.Map`__. En particular el método `getOrElseUpdate` en `scala.collection.concurrent.Map` no es atómico (Corregido en Scala 2.11.6, [SI-7943](https://issues.scala-lang.org/browse/SI-7943)). Dado que en todos los proyectos en el que trabajos requieren construcción cruzada tanto para Scala 2.10 como para Scala 2.11, se debe evitar el uso de `scala.collection.concurrent.Map`.
 
 
 ### <a name='concurrency-sync-vs-map'>Explicit Synchronization vs Concurrent Collections</a>
