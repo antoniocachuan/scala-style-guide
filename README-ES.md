@@ -827,24 +827,24 @@ def getAddress(name: String): Option[String] = {
 
 ### <a name='concurrency-scala-collection'>Scala concurrent.Map</a>
 
-__De Preferencia usar `java.util.concurrent.ConcurrentHashMap` antes que `scala.collection.concurrent.Map`__. En particular el método `getOrElseUpdate` en `scala.collection.concurrent.Map` no es atómico (Corregido en Scala 2.11.6, [SI-7943](https://issues.scala-lang.org/browse/SI-7943)). Dado que en todos los proyectos en el que trabajos requieren construcción cruzada tanto para Scala 2.10 como para Scala 2.11, se debe evitar el uso de `scala.collection.concurrent.Map`.
+__De Preferencia usar `java.util.concurrent.ConcurrentHashMap` antes que `scala.collection.concurrent.Map`__. En particular el método `getOrElseUpdate` en `scala.collection.concurrent.Map` no es atómico (Corregido en Scala 2.11.6, [SI-7943](https://issues.scala-lang.org/browse/SI-7943)). Dado que en todos los proyectos en el que trabajamos requieren construcción cruzada tanto para Scala 2.10 como para Scala 2.11, se debe evitar el uso de `scala.collection.concurrent.Map`.
 
 
-### <a name='concurrency-sync-vs-map'>Explicit Synchronization vs Concurrent Collections</a>
+### <a name='concurrency-sync-vs-map'>Sincronización Explícita vs Colecciones Concurrentes</a>
 
-There are 3 recommended ways to make concurrent accesses to shared states safe. __Do NOT mix them__ because that could make the program very hard to reason about and lead to deadlocks.
+Hay 3 formas recomendadas de hacer seguros los accesos concurrentes a estados compartidos. __NO los mezcle__ ya que eso podria causar que el programa sea más lento y generar caídas.
 
-1. `java.util.concurrent.ConcurrentHashMap`: Use when all states are captured in a map, and high degree of contention is expected.
+1. `java.util.concurrent.ConcurrentHashMap`: Se usa cuando todos los estados se capturan en un map y se espera un alto grado de contención.
   ```scala
   private[this] val map = new java.util.concurrent.ConcurrentHashMap[String, String]
   ```
 
-2. `java.util.Collections.synchronizedMap`: Use when all states are captured in a map, and contention is not expected but you still want to make code safe. In case of no contention, the JVM JIT compiler is able to remove the synchronization overhead via biased locking.
+2. `java.util.Collections.synchronizedMap`: Se usa cuando todos los estados se capturan en un map y no se espera la contención, pero aún se espera que el código sea seguro. En el caso de que no haya contención, el compilador JVM JIT puede eliminar la sobrecarga de sincronización mediante el bloqueo sesgado.
   ```scala
   private[this] val map = java.util.Collections.synchronizedMap(new java.util.HashMap[String, String])
   ```
 
-3. Explicit synchronization by synchronizing all critical sections: can used to guard multiple variables. Similar to 2, the JVM JIT compiler can remove the synchronization overhead via biased locking.
+3. Sincronización explícita por la sincronización de todas las secciones críticas: puede usarse para proteger múltiples variables. Al igual que en el 2do caso, el compilador JVM JIT puede eliminar la sobrecarga de sincronización mediante el bloqueo sesgado.
   ```scala
   class Manager {
     private[this] var count = 0
@@ -857,7 +857,7 @@ There are 3 recommended ways to make concurrent accesses to shared states safe. 
   }
   ```
 
-Note that for case 1 and case 2, do not let views or iterators of the collections escape the protected area. This can happen in non-obvious ways, e.g. when returning `Map.keySet` or `Map.values`. If views or values are required to pass around, make a copy of the data.
+Tenga en cuenta que para 1er y 2do caso, no se permite que las vistas o los iteradores de las colecciones se escapen del área protegida. Esto puede suceder de formas no obvias, por ejejmplo, al devolver Map.keySet o Map.values. Si se requieren vistas o valores para pasar, haga una copia de los datos. 
   ```scala
   val map = java.util.Collections.synchronizedMap(new java.util.HashMap[String, String])
 
@@ -868,7 +868,7 @@ Note that for case 1 and case 2, do not let views or iterators of the collection
   def values: Iterable[String] = map.synchronized { Seq(map.values: _*) }
   ```
 
-### <a name='concurrency-sync-vs-atomic'>Explicit Synchronization vs Atomic Variables vs @volatile</a>
+### <a name='concurrency-sync-vs-atomic'>Sincronización Explicita vs Variables Atómicas vs @volatile</a>
 
 The `java.util.concurrent.atomic` package provides primitives for lock-free access to primitive types, such as `AtomicBoolean`, `AtomicInteger`, and `AtomicReference`.
 
