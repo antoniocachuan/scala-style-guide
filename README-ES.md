@@ -1,34 +1,34 @@
 # Guías de estilo de Databricks para Scala
 
-Con más de 1000 contribuidores,  Apache Spark según nuestro conocimiento, es el proyecto de código abierto más grande en Big Data y el más activo proyecto escrito en Scala. Esta guía se basa en nuestra experiencia de mentoría y trabajo con ingenieros contribuyendo a Spark tan bien como nuestro equipo de ingeniería de [Databricks](http://databricks.com/).
+Con más de 1000 contribuidores,  Apache Spark según nuestro conocimiento, es el proyecto de código abierto más grande en Big Data y el más activo proyecto escrito en Scala. Esta guía se basa en nuestra experiencia de mentoría y trabajo con ingenieros que contribuyen a Spark tan bien como nuestro equipo de ingeniería de [Databricks](http://databricks.com/).
 
-Code is __written once__ by its author, but __read and modified multiple times__ by lots of other engineers. As most bugs actually come from future modification of the code, we need to optimize our codebase for long-term, global readability and maintainability. The best way to achieve this is to write simple code.
+El código es __escrito una vez__ por su autor, pero __leído y modificado muchas veces__ por muchos otros ingenieros. Como mucha de las fallas vienen actualmente de futuras modificaciones del código, es necesario optimizar nuestro código para una vida a largo plazo con legilibilidad global y mantenibilidad. La mejor manera de lograr este objetivo es escribir código sencillo.
 
-Scala is an incredibly powerful language that is capable of many paradigms. We have found that the following guidelines work well for us on projects with high velocity. Depending on the needs of your team, your mileage might vary.
+Scala es un lenguaje increiblemente poderoso que es capaz de muchos paradigmas. Nosotros hemos encontrado que las siguientes pautas funcionan bien para nosotros dentro de proyectos con alta velocidad. Dependiendo de la necesidad de tu equipo, tu velocidad puede variar.
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 
-## <a name='TOC'>Table of Contents</a>
+## <a name='TOC'>Tabla de contenidos</a>
 
-1. [Document History](#history)
+1. [Historia del documento](#history)
 
-2. [Syntactic Style](#syntactic)
-    * [Naming Convention](#naming)
-    * [Variable Naming Convention](#variable-naming)
-    * [Line Length](#linelength)
-    * [Rule of 30](#rule_of_30)
-    * [Spacing and Indentation](#indent)
-    * [Blank Lines (Vertical Whitespace)](#blanklines)
-    * [Parentheses](#parentheses)
-    * [Curly Braces](#curly)
-    * [Long Literals](#long_literal)
-    * [Documentation Style](#doc)
-    * [Ordering within a Class](#ordering_class)
-    * [Imports](#imports)
-    * [Pattern Matching](#pattern-matching)
-    * [Infix Methods](#infix)
-    * [Anonymous Methods](#anonymous)
+2. [Estilos Sintáxis](#syntactic)
+    * [Convención de nombres](#naming)
+    * [Convención de nombramiento de variables](#variable-naming)
+    * [Longitud de línea](#linelength)
+    * [Regla de los 30](#rule_of_30)
+    * [Espaciado e indentación](#indent)
+    * [Líneas en blanco (espaciado vertical)](#blanklines)
+    * [Paréntesis](#parentheses)
+    * [Llaves](#curly)
+    * [Literales largo](#long_literal)
+    * [Estilo de documentación](#doc)
+    * [Ordenamiento dentro de una clase](#ordering_class)
+    * [Imporatación](#imports)
+    * [Coincidencia de patrones](#pattern-matching)
+    * [Métodos de infijos](#infix)
+    * [Métodos anónimos](#anonymous)
 
 1. [Scala Language Features](#lang)
     * [Case Classes and Immutability](#case_class_immutability)
@@ -81,11 +81,11 @@ Scala is an incredibly powerful language that is capable of many paradigms. We h
 
 
 ## <a name='history'>Document History</a>
-- 2015-03-16: Initial version.
-- 2015-05-25: Added [override Modifier](#override_modifier) section.
-- 2015-08-23: Downgraded the severity of some rules from "do NOT" to "avoid".
-- 2015-11-17: Updated [apply Method](#apply_method) section: apply method in companion object should return the companion class.
-- 2015-11-17: This guide has been [translated into Chinese](README-ZH.md). The Chinese translation is contributed by community member [Hawstein](https://github.com/Hawstein). We do not guarantee that it will always be kept up-to-date.
+- 2015-03-16: Versión inicial.
+- 2015-05-25: Agregado sección [anulación de modificador](#override_modifier).
+- 2015-08-23: Asignación de un grado menor de severidad para algunas reglas de "NO hacer" a "evitar".
+- 2015-11-17: Actualizado sección [método de aplicación](#apply_method): apply method in companion object should return the companion class.
+- 2015-11-17: Esta guía ha sido [traducida al Chino](README-ZH.md). La traducción al Chino es contribucción por el miembro de la comunidadThe Chinese translation is contributed by community member [Hawstein](https://github.com/Hawstein). We do not guarantee that it will always be kept up-to-date.
 - 2015-12-14:  This guide has been [translated into Korean](README-KO.md). The Korean translation is contributed by [Hyukjin Kwon](https://github.com/HyukjinKwon) and reviewed by [Yun Park](https://github.com/yunpark93), [Kevin (Sangwoo) Kim](https://github.com/swkimme), [Hyunje Jo](https://github.com/RetrieverJo) and [Woochel Choi](https://github.com/socialpercon). We do not guarantee that it will always be kept up-to-date.
 - 2016-06-15: Added [Anonymous Methods](#anonymous) section.
 - 2016-06-21: Added [Variable Naming Convention](#variable-naming) section.
