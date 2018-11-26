@@ -1,6 +1,6 @@
 # Guías de estilo de Databricks para Scala
 
-Con más de 1000 contribuidores, Apache Spark is to the best of our knowledge the largest open-source project in Big Data and the most active project written in Scala. This guide draws from our experience coaching and working with engineers contributing to Spark as well as our [Databricks](http://databricks.com/) engineering team.
+Con más de 1000 contribuidores,  Apache Spark según nuestro conocimiento, es el proyecto de código abierto más grande en Big Data y el más activo proyecto escrito en Scala. Esta guía se basa en nuestra experiencia de mentoría y trabajo con ingenieros contribuyendo a Spark tan bien como nuestro equipo de ingeniería de [Databricks](http://databricks.com/).
 
 Code is __written once__ by its author, but __read and modified multiple times__ by lots of other engineers. As most bugs actually come from future modification of the code, we need to optimize our codebase for long-term, global readability and maintainability. The best way to achieve this is to write simple code.
 
